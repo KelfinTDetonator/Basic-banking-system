@@ -1,7 +1,27 @@
+class Screen{
+    constructor(prop){
+        this.prop = prop.toString();
+    }
+
+    displayAmountMessage(){
+        let digit = this.prop.length
+        if(digit === 7)
+        console.log(`Saldo anda adalah Rp.${this.prop.split("", 4).join("")}.000`); 
+         else if(digit === 6){
+            console.log(`Saldo anda adalah Rp.${this.prop.split("", 3).join("")}.000`); 
+        } else if(digit === 5){
+            console.log(`Saldo anda adalah Rp.${this.prop.split("", 2).join("")}.000`);
+        }
+        
+        //split string index ke-3 
+    }
+}
+
 class BankAccount{
     constructor(pin){
-        this.saldo = 100000;
+        this.saldo = 1500000;
         this.pin = this.#encrypt(pin);
+        this.screen = new Screen(this.saldo);
     }
     #encrypt(pin){
         return `encrypted-pin-of${pin}`;
@@ -33,4 +53,4 @@ class BankAccount{
 }
 
 const kelfin = new BankAccount(0);
-kelfin.deposit(50000)
+kelfin.screen.displayAmountMessage();
