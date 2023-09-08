@@ -1,27 +1,10 @@
-class Screen{
-    constructor(prop){
-        this.prop = prop.toString();
-    }
-
-    displayAmountMessage(){
-        let digit = this.prop.length
-        if(digit === 7)
-        console.log(`Saldo anda adalah Rp.${this.prop.split("", 4).join("")}.000`); 
-         else if(digit === 6){
-            console.log(`Saldo anda adalah Rp.${this.prop.split("", 3).join("")}.000`); 
-        } else if(digit === 5){
-            console.log(`Saldo anda adalah Rp.${this.prop.split("", 2).join("")}.000`);
-        }
-        
-        //split string index ke-3 
-    }
-}
+import Display from "./screenClass.js";
 
 class BankAccount{
     constructor(pin){
-        this.saldo = 1500000;
+        this.saldo = 500000;
         this.pin = this.#encrypt(pin);
-        this.screen = new Screen(this.saldo);
+        this.screen = new Display(this.saldo);
     }
     #encrypt(pin){
         return `encrypted-pin-of${pin}`;
@@ -32,25 +15,40 @@ class BankAccount{
     }
 
     authenticate(pin){
-        this.#decrypt() === pin;
+        if(this.#decrypt() === pin) { 
+            console.log("Berhasil masuk!");
+            return true;
+            }
+    }
+
+    #timeProcess(){
+        let time = Math.floor(1+Math.random()*2);
+        
+        return time * 1000;
     }
 
     deposit(amount){
         setTimeout(()=>{
-            console.log("Processing request..")
+            console.log("Memproses permintaan..")
             this.saldo += amount;
         }, 500);
-        setTimeout(()=>{ console.log(`Dana sebesar ${amount} telah berhasil dideposit!`) }, 4000)
+        setTimeout(()=>{ console.log(`Dana sebesar ${amount} telah berhasil dideposit!`) }, this.#timeProcess())
         return this.saldo;
     }
 
     withdraw(amount){
         setTimeout(()=>{
-            this.saldo -= amount; return "1";
-        }, 300);
-        return " ";
+            console.log("Memproses permintaan..")
+            this.saldo -= amount; 
+        }, 500);
+        setTimeout(()=>{ console.log(`Dana sebesar ${amount} telah berhasil ditarik!`) }, this.#timeProcess())
+        return this.saldo;
     }
 }
 
-const kelfin = new BankAccount(0);
-kelfin.screen.displayAmountMessage();
+const kelfin = new BankAccount("112666");
+kelfin.authenticate("112666");
+
+kelfin.withdraw(100000);
+
+
