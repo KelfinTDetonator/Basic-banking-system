@@ -23,15 +23,15 @@ class BankAccount{
 
     #timeProcess(){
         let time = Math.floor(1+Math.random()*2);
-        
         return time * 1000;
     }
 
     deposit(amount){
+        this.saldo += amount;
         setTimeout(()=>{
             console.log("Memproses permintaan..")
-            this.saldo += amount;
-        }, 500);
+            
+        }, 500)
         setTimeout(()=>{ console.log(`Dana sebesar ${amount} telah berhasil dideposit!`) }, this.#timeProcess())
         return this.saldo;
     }
@@ -44,11 +44,14 @@ class BankAccount{
         setTimeout(()=>{ console.log(`Dana sebesar ${amount} telah berhasil ditarik!`) }, this.#timeProcess())
         return this.saldo;
     }
+
+    display(){
+        this.screen.tampilLayar(); 
+    }
 }
 
-const kelfin = new BankAccount("112666");
+export const kelfin = new BankAccount("112666");
 kelfin.authenticate("112666");
-
-kelfin.withdraw(100000);
+kelfin.display();
 
 
